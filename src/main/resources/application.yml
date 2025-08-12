@@ -4,6 +4,10 @@ spring:
       api-key: ${OPENAI_API_KEY}           # Use env var or replace with your key
       embedding:
         model: text-embedding-3-small      # Updated recommended embedding model
+      chat:
+        options:
+          model: gemini-2.0-flash-exp
+        completions-path: /chat/completions
     vectorstore:
       chroma:
         client:
