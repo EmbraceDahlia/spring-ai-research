@@ -1,0 +1,16 @@
+spring:
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}           # Use env var or replace with your key
+      embedding:
+        model: text-embedding-3-small      # Updated recommended embedding model
+    vectorstore:
+      chroma:
+        client:
+          host: http://localhost
+          port: 8000
+          # key-token:
+          # username:
+          # password:
+        initialize-schema: true
+        collection-name: documents
