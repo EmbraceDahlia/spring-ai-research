@@ -43,10 +43,10 @@
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-starter-vector-store-chroma</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-starter-model-transformers</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.ai</groupId>-->
+<!--			<artifactId>spring-ai-starter-model-transformers</artifactId>-->
+<!--		</dependency>-->
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.ai</groupId>-->
 <!--			<artifactId>spring-ai-starter-vector-store-redis</artifactId>-->
@@ -64,7 +64,14 @@
 			<artifactId>spring-ai-tika-document-reader</artifactId>
 			<version>1.0.0-M5</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

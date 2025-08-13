@@ -8,6 +8,7 @@ spring:
           model: gpt-4o
         completions-path: /chat/completions
       embedding:
+#        provider: openai
         options:
           model: text-embedding-3-small
 
@@ -18,6 +19,18 @@ spring:
           port: 8000
         initialize-schema: true
         collection-name: documents
+
+# ------------------------
+# Actuator & Prometheus
+# ------------------------
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+  endpoint:
+    prometheus:
+      enabled: true
 
 # Uncomment to enable debug logging for the advisor
 #logging:
