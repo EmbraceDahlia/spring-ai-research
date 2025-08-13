@@ -1,0 +1,12 @@
+spring.ai.openai.api-key=${GEMINI_API_KEY}
+spring.ai.openai.base-url=https://generativelanguage.googleapis.com/v1beta/openai
+spring.ai.openai.chat.options.model=gemini-2.0-flash-exp
+spring.ai.openai.chat.completions-path=/chat/completions
+spring.ai.openai.embedding.options.model=gemini-embedding-001
+
+spring.ai.vectorstore.chroma.client.host=http://localhost
+spring.ai.vectorstore.chroma.client.port=8000
+spring.ai.vectorstore.chroma.initialize-schema=true
+spring.ai.vectorstore.chroma.collection-name=documents
+
+#logging.level.org.springframework.ai.chat.client.advisor=DEBUG

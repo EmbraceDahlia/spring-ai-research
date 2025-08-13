@@ -16,17 +16,13 @@ public class Config {
     public RestClient.Builder builder() {
         return RestClient.builder().requestFactory(new SimpleClientHttpRequestFactory());
     }
-
-
     @Bean
     public ChromaApi chromaApi(RestClient.Builder restClientBuilder) {
         String chromaUrl = "http://localhost:8000";
-        ChromaApi chromaApi = new ChromaApi(chromaUrl, restClientBuilder, new ObjectMapper());
-        return chromaApi;
+        return new ChromaApi(chromaUrl, restClientBuilder, new ObjectMapper());
     }
-    @Bean
-    public EmbeddingModel embeddingModel() {
-        return new OpenAiEmbeddingModel(OpenAiApi.builder().apiKey(System.getenv("OPENAI_API_KEY")).build());
-    }
-
+//    @Bean
+//    public EmbeddingModel embeddingModel() {
+//        return new OpenAiEmbeddingModel(OpenAiApi.builder().apiKey(System.getenv("GEMINI_API-KEY")).build());
+//    }
 }
