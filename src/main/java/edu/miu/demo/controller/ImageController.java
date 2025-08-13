@@ -1,6 +1,7 @@
 package edu.miu.demo.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import edu.miu.demo.dto.ChatRequest;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
@@ -15,11 +16,15 @@ import org.springframework.ai.image.ImageResponse;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
+import org.springframework.util.MimeType;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,6 +33,7 @@ import java.util.stream.Stream;
 import org.slf4j.Logger;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/images")
 public class ImageController {
     private final static Logger LOG = LoggerFactory.getLogger(ImageController.class);
@@ -87,4 +93,36 @@ public class ImageController {
                 .call()
                 .entity(String[].class);
     }
+    @PostMapping("/question")
+    public String[] question(@RequestBody ChatRequest request) throws IOException {
+        List<Media> mediaList = new ArrayList<>();
+
+        if (request.getImage() != null) {
+            Path imagePath = Paths.get("uploads", request.getImage());
+            byte[] imageBytes = Files.readAllBytes(imagePath);
+            String mimeTypeStr = Files.probeContentType(imagePath);
+            if (mimeTypeStr == null) {
+                mimeTypeStr = "application/octet-stream"; // or "image/png" as fallback
+            }
+
+            Media imageMedia = Media.builder()
+                    .id(UUID.randomUUID().toString())
+                    .mimeType(MimeType.valueOf(mimeTypeStr))
+                    .data(new UrlResource(imagePath.toUri()))
+                    .name(request.getImage())
+                    .build();
+
+            mediaList.add(imageMedia);
+        }
+
+        UserMessage userMessage = UserMessage.builder()
+                .text(request.getQuestion())
+                .media(mediaList)
+                .build();
+
+        return this.chatClient.prompt(new Prompt(userMessage))
+                .call()
+                .entity(String[].class);
+    }
+
 }

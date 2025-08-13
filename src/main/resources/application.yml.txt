@@ -1,0 +1,20 @@
+spring:
+  ai:
+    openai:
+      api-key: ${GEMINI_API_KEY}
+      base-url: https://generativelanguage.googleapis.com/v1beta/openai
+      chat:
+        options:
+          model: gemini-2.0-flash-exp
+        completions-path: /chat/completions
+      embedding:
+        options:
+          model: gemini-embedding-001
+
+    vectorstore:
+      chroma:
+        client:
+          host: http://localhost
+          port: 8000
+        initialize-schema: true
+        collection-name: documents

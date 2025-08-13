@@ -1,15 +1,15 @@
 spring:
   ai:
     openai:
-      api-key: ${GEMINI_API_KEY}
-      base-url: https://generativelanguage.googleapis.com/v1beta/openai
+      api-key: ${OPENAI_API_KEY}
+      base-url: https://api.openai.com/v1
       chat:
         options:
-          model: gemini-2.0-flash-exp
+          model: gpt-4o
         completions-path: /chat/completions
       embedding:
         options:
-          model: gemini-embedding-001
+          model: text-embedding-3-small
 
     vectorstore:
       chroma:
