@@ -1,7 +1,9 @@
 package edu.miu.demo;
 
+import edu.miu.demo.repo.VectorStoreRepository;
 import org.springframework.ai.chat.client.advisor.api.Advisor;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.rag.Query;
 import org.springframework.ai.rag.advisor.RetrievalAugmentationAdvisor;
 import org.springframework.ai.rag.generation.augmentation.ContextualQueryAugmenter;
 import org.springframework.ai.rag.retrieval.search.VectorStoreDocumentRetriever;
@@ -26,6 +28,8 @@ public class DemoApplication implements CommandLineRunner {
 	private Resource documentResource;
 	@Autowired
 	VectorStore vectorStore;
+	@Autowired
+	VectorStoreRepository vectorStoreRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -34,20 +38,11 @@ public class DemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-//		List <Document> documents = List.of(
-//				new Document("1","Spring AI rocks!! Spring AI rocks!! Spring AI rocks!! Spring AI rocks!! Spring AI rocks!!", Map.of("meta1", "meta1")),
-//				new Document("2","The World is Big and Salvation Lurks Around the Corner",Map.of("meta2", "meta2")),
-//				new Document("3","You walk forward facing the past and you turn back toward the future.", Map.of("meta3", "meta3")));
-//
-//		vectorStore.add(documents);
-//		TikaDocumentReader documentReader = new TikaDocumentReader(documentResource);
-//		TextSplitter textSplitter = new TokenTextSplitter();
-//		vectorStore.add(
-//				textSplitter.apply(
-//						documentReader.get()));
-
-//		List<Document> results = this.vectorStore.similaritySearch(SearchRequest.builder().query("Spring").topK(5).build());
-//        if(results!=null)
-//        	results.forEach(System.out::println);
+		vectorStoreRepository.cleanUpStore();
+		TikaDocumentReader documentReader = new TikaDocumentReader(documentResource);
+		TextSplitter textSplitter = new TokenTextSplitter();
+		vectorStore.add(
+				textSplitter.apply(
+						documentReader.get()));
 	}
 }
